@@ -6,20 +6,30 @@ def main():
     pygame.init()
 
     game_time = pygame.time.Clock()
-    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    
 
     dt = 0
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+    updateable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    Player.containers = (updateable, drawable)
+
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     while 1 > 0:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
             
-           
-        pygame.Surface.fill(screen,(0,0,0))
-        player.draw(screen) 
-        player.update(dt)
+        updateable.update(dt)
+
+        screen.fill("black")
+
+        for focus in drawable:
+            focus.draw(screen)
+
         pygame.display.flip()
 
         
