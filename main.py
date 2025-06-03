@@ -40,11 +40,15 @@ def main():
                 return
             
         updateable.update(dt)
-        player.shot_cd = player.shot_cd - dt
+        
         for asteroid_obj in asteroids_group:
             if player.collision_checker(asteroid_obj) == True:
                 print("Game over!")
                 raise sys.exit("You suck")
+            for shot in shots:
+                if shot.collision_checker(asteroid_obj) == True:
+                    shot.kill()
+                    asteroid_obj.split()
 
         screen.fill("black")
 
